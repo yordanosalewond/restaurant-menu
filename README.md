@@ -2,7 +2,7 @@
 
 > CuisineCanvas is a visually stunning and highly intuitive web application designed for modern restaurants. It provides a seamless digital dining experience, allowing customers to browse a beautifully categorized menu, view high-quality images and detailed descriptions of each dish, and effortlessly add items to a dynamic shopping cart. The platform features a streamlined, single-page checkout process for order confirmation and contact information collection. Built with a mobile-first philosophy, the interface is flawlessly responsive, ensuring an exceptional user experience on any device.
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yordanosalewond/restaurant-menu)
 
 ## Key Features
 
@@ -93,7 +93,7 @@ This application is designed to be deployed to the Cloudflare global network.
 
 Alternatively, you can deploy your own version of this project with a single click.
 
-[cloudflarebutton]
+[![Deploy to Cloudflare](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/yordanosalewond/restaurant-menu)
 
 ## License
 
