@@ -1,0 +1,170 @@
+import { useCartStore } from "@/hooks/useCartStore";
+import { AppLayout } from "@/components/layout/AppLayout";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { customerInfoSchema, type CustomerInfo } from "@shared/types";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { useNavigate } from "react-router-dom";
+import { api } from "@/lib/api-client";
+import type { Order } from "@shared/types";
+import { toast } from "sonner";
+import { useEffect, useState, useMemo, useCallback } from "react";
+import { AnimatedPage } from "@/components/AnimatedPage";
+export function CheckoutPage() {
+  const items = useCartStore(state => state.items);
+  const clearCart = useCartStore(state => state.clearCart);
+  const { totalPrice, totalItems } = useMemo(() => {
+    const totalItems = items.reduce((total, item) => total + item.quantity, 0);
+    const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
+    return { totalPrice, totalItems };
+  }, [items]);
+  const navigate = useNavigate();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  useEffect(() => {
+    if (items.length === 0 && !isSubmitting) {
+      navigate('/');
+    }
+  }, [items, navigate, isSubmitting]);
+  const form = useForm<CustomerInfo>({
+    resolver: zodResolver(customerInfoSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+    },
+  });
+  const onSubmit = useCallback(async (values: CustomerInfo) => {
+    setIsSubmitting(true);
+    const orderData = {
+      items: items,
+      total: totalPrice,
+      customer: values,
+    };
+    try {
+      const createdOrder = await api<Order>('/api/orders', {
+        method: 'POST',
+        body: JSON.stringify(orderData),
+      });
+      toast.success("Order placed successfully!");
+      clearCart();
+      navigate(`/confirmation/${createdOrder.id}`);
+    } catch (error) {
+      toast.error("Failed to place order. Please try again.");
+      console.error(error);
+      setIsSubmitting(false);
+    }
+  }, [items, totalPrice, clearCart, navigate]);
+  if (items.length === 0) {
+    return null; // Render nothing while redirecting
+  }
+  return (
+    <AppLayout>
+      <AnimatedPage>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="py-16 md:py-24">
+            <div className="text-center mb-16">
+              <h1 className="text-4xl md:text-5xl font-display font-bold">Checkout</h1>
+              <p className="mt-4 text-lg text-muted-foreground">Complete your order by providing your details below.</p>
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-5 gap-12 items-start">
+              {/* Customer Information Form */}
+              <div className="lg:col-span-3">
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-semibold font-display">Contact Information</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <Form {...form}>
+                      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                        <FormField
+                          control={form.control}
+                          name="name"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Full Name</FormLabel>
+                              <FormControl>
+                                <Input placeholder="John Doe" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="email"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Email Address</FormLabel>
+                              <FormControl>
+                                <Input type="email" placeholder="john.doe@example.com" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          control={form.control}
+                          name="phone"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>Phone Number</FormLabel>
+                              <FormControl>
+                                <Input placeholder="(123) 456-7890" {...field} />
+                              </FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+                        <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
+                          {isSubmitting ? 'Placing Order...' : `Place Order - $${totalPrice.toFixed(2)}`}
+                        </Button>
+                      </form>
+                    </Form>
+                  </CardContent>
+                </Card>
+              </div>
+              {/* Order Summary */}
+              <div className="lg:col-span-2 lg:sticky lg:top-24">
+                <Card className="bg-muted/30">
+                  <CardHeader>
+                    <CardTitle className="text-2xl font-semibold font-display">Order Summary</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ScrollArea className="h-64 pr-4 -mr-4">
+                      <div className="space-y-4">
+                        {items.map(item => (
+                          <div key={item.id} className="flex justify-between items-center">
+                            <div className="flex items-center gap-4">
+                              <img src={item.imageUrl} alt={item.name} className="w-12 h-12 rounded-md object-cover" />
+                              <div>
+                                <p className="font-medium">{item.name}</p>
+                                <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                              </div>
+                            </div>
+                            <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </ScrollArea>
+                  </CardContent>
+                  <CardFooter className="flex flex-col space-y-4 pt-4">
+                    <Separator />
+                    <div className="w-full flex justify-between text-lg font-bold">
+                      <span>Total ({totalItems} items)</span>
+                      <span>${totalPrice.toFixed(2)}</span>
+                    </div>
+                  </CardFooter>
+                </Card>
+              </div>
+            </div>
+          </div>
+        </div>
+      </AnimatedPage>
+    </AppLayout>
+  );
+}

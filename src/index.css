@@ -1,0 +1,68 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    /* Original Project Palette */
+    --background: 210 40% 98%;
+    --foreground: 210 4% 16%;
+    --card: 210 40% 98%;
+    --card-foreground: 210 4% 16%;
+    --popover: 210 40% 98%;
+    --popover-foreground: 210 4% 16%;
+    --primary: 14 74% 52%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 91%;
+    --secondary-foreground: 210 4% 16%;
+    --muted: 210 40% 91%;
+    --muted-foreground: 210 4% 45%;
+    --accent: 210 40% 89%;
+    --accent-foreground: 210 4% 16%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 40% 91%;
+    --input: 210 40% 91%;
+    --ring: 14 74% 52%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    /* Original Project Palette - Dark */
+    --background: 210 4% 10%;
+    --foreground: 210 40% 98%;
+    --card: 210 4% 12%;
+    --card-foreground: 210 40% 98%;
+    --popover: 210 4% 10%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 14 74% 52%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 4% 16%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 210 4% 16%;
+    --muted-foreground: 210 4% 65%;
+    --accent: 210 4% 16%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 4% 16%;
+    --input: 210 4% 16%;
+    --ring: 14 74% 52%;
+  }
+  * {
+    @apply border-border;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+@layer components {
+  .btn-gradient {
+    @apply bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 active:scale-95 transition-transform;
+  }
+}

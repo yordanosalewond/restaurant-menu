@@ -1,0 +1,95 @@
+import type { MenuItem } from './types';
+export const MOCK_MENU_ITEMS: MenuItem[] = [
+  // Appetizers
+  {
+    id: 'app1',
+    name: 'Bruschetta',
+    description: 'Grilled bread topped with fresh tomatoes, garlic, basil, and olive oil.',
+    price: 8.99,
+    category: 'Appetizers',
+    imageUrl: 'https://images.unsplash.com/photo-1505253716362-afb74b626351?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'app2',
+    name: 'Stuffed Mushrooms',
+    description: 'Mushroom caps filled with breadcrumbs, garlic, cheese, and herbs.',
+    price: 9.99,
+    category: 'Appetizers',
+    imageUrl: 'https://images.unsplash.com/photo-1622326232211-998b1b73a5a2?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'app3',
+    name: 'Garlic Bread with Cheese',
+    description: 'Toasted baguette with garlic butter and melted mozzarella cheese.',
+    price: 6.99,
+    category: 'Appetizers',
+    imageUrl: 'https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?q=80&w=800&auto=format&fit=crop',
+  },
+  // Main Courses
+  {
+    id: 'main1',
+    name: 'Spaghetti Carbonara',
+    description: 'Classic pasta with eggs, cheese, pancetta, and black pepper.',
+    price: 15.99,
+    category: 'Pasta',
+    imageUrl: 'https://images.unsplash.com/photo-1588013273468-215922608189?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'main2',
+    name: 'Margherita Pizza',
+    description: 'Simple yet delicious pizza with tomato sauce, mozzarella, and fresh basil.',
+    price: 14.99,
+    category: 'Pizza',
+    imageUrl: 'https://images.unsplash.com/photo-1598021680942-84f9362d8539?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'main3',
+    name: 'Grilled Salmon',
+    description: 'Salmon fillet grilled to perfection, served with asparagus and lemon.',
+    price: 19.99,
+    category: 'Main Courses',
+    imageUrl: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'main4',
+    name: 'Classic Burger',
+    description: 'Juicy beef patty with lettuce, tomato, onion, and our special sauce.',
+    price: 13.99,
+    category: 'Main Courses',
+    imageUrl: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?q=80&w=800&auto=format&fit=crop',
+  },
+  // Desserts
+  {
+    id: 'des1',
+    name: 'Tiramisu',
+    description: 'A coffee-flavored Italian dessert with ladyfingers, mascarpone, and cocoa.',
+    price: 7.99,
+    category: 'Desserts',
+    imageUrl: 'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'des2',
+    name: 'Chocolate Lava Cake',
+    description: 'Warm chocolate cake with a gooey molten center, served with vanilla ice cream.',
+    price: 8.99,
+    category: 'Desserts',
+    imageUrl: 'https://images.unsplash.com/photo-1586985289936-a8a7b3534833?q=80&w=800&auto=format&fit=crop',
+  },
+  // Beverages
+  {
+    id: 'bev1',
+    name: 'Espresso',
+    description: 'A strong, full-bodied coffee with a rich aroma.',
+    price: 3.50,
+    category: 'Beverages',
+    imageUrl: 'https://images.unsplash.com/photo-1599398054035-9433c2a4c685?q=80&w=800&auto=format&fit=crop',
+  },
+  {
+    id: 'bev2',
+    name: 'Fresh Orange Juice',
+    description: 'Freshly squeezed orange juice, packed with vitamins.',
+    price: 4.99,
+    category: 'Beverages',
+    imageUrl: 'https://images.unsplash.com/photo-1600271886742-f049cd451bba?q=80&w=800&auto=format&fit=crop',
+  },
+];
