@@ -94,7 +94,7 @@ export function OrderConfirmationPage() {
                     </div>
                     <div className="text-center bg-muted/50 p-4 rounded-md">
                       <p className="font-semibold">Estimated Preparation Time</p>
-                      <p className="text-2xl font-bold text-primary">20-30 Minutes</p>
+                      <p className="text-2xl font-bold text-[hsl(var(--primary))]">20-30 Minutes</p>
                     </div>
                   </div>
                 ) : null}

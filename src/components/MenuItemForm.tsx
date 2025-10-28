@@ -133,7 +133,7 @@ export function MenuItemForm({ onSubmit, initialData, isSubmitting }: MenuItemFo
                   {imagePreview && (
                     <img src={imagePreview} alt="Preview" className="w-20 h-20 rounded-md object-cover" />
                   )}
-                  <Label htmlFor="image-upload" className="flex-1 cursor-pointer border-2 border-dashed rounded-md p-4 text-center text-muted-foreground hover:border-primary hover:text-primary transition-colors">
+                  <Label htmlFor="image-upload" className="flex-1 cursor-pointer border-2 border-dashed rounded-md p-4 text-center text-muted-foreground hover:border-[hsl(var(--primary))] hover:text-[hsl(var(--primary))] transition-colors">
                     <UploadCloud className="mx-auto h-6 w-6 mb-2" />
                     <span>{imagePreview ? 'Change Image' : 'Upload an Image'}</span>
                   </Label>

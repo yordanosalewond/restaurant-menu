@@ -20,8 +20,8 @@ export function MenuSidebar({ categories, activeCategory, onSelectCategory }: Me
                   onSelectCategory(category);
                 }}
                 className={cn(
-                  "block w-full text-left px-4 py-2 rounded-md transition-colors text-muted-foreground hover:bg-accent hover:text-accent-foreground",
-                  activeCategory === category && "bg-primary/10 text-primary font-semibold"
+                  "block w-full text-left px-4 py-2 rounded-md transition-colors text-[hsl(var(--muted-foreground))] hover:bg-[hsl(var(--accent))] hover:text-[hsl(var(--accent-foreground))]",
+                  activeCategory === category && "bg-[hsl(var(--primary)_/_0.1)] text-[hsl(var(--primary))] font-semibold"
                 )}
               >
                 {category}

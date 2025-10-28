@@ -34,7 +34,7 @@ export function Header() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex h-20 items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
-              <Utensils className="h-7 w-7 text-primary" />
+              <Utensils className="h-7 w-7 text-[hsl(var(--primary))]" />
               <span className="text-xl font-bold font-display tracking-wider">CuisineCanvas</span>
             </Link>
             <div className="flex items-center gap-2 md:gap-4">
@@ -64,7 +64,7 @@ export function Header() {
               <Button variant="ghost" size="icon" className="relative" onClick={() => setIsCartOpen(true)}>
                 <ShoppingCart className="h-5 w-5" />
                 {hydrated && totalItems > 0 && (
-                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-[hsl(var(--primary))] text-xs font-bold text-[hsl(var(--primary-foreground))]">
                     {totalItems}
                   </span>
                 )}

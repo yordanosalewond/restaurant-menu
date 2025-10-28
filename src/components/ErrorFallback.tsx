@@ -49,8 +49,8 @@ export function ErrorFallback({
           <CardContent className="p-8 space-y-6">
             {/* Icon and title */}
             <div className="text-center space-y-4">
-              <div className="mx-auto w-16 h-16 rounded-2xl bg-destructive/10 flex items-center justify-center">
-                <AlertTriangle className="w-8 h-8 text-destructive" />
+              <div className="mx-auto w-16 h-16 rounded-2xl bg-[hsl(var(--destructive)_/_0.1)] flex items-center justify-center">
+                <AlertTriangle className="w-8 h-8 text-[hsl(var(--destructive))]" />
               </div>
               <h1 className="text-2xl font-bold">{title}</h1>
               <p className="text-muted-foreground">{message}</p>

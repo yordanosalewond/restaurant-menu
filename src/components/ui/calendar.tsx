@@ -68,11 +68,11 @@ function Calendar({
           defaultClassNames.dropdowns
         ),
         dropdown_root: cn(
-          "has-focus:border-ring border-input shadow-xs has-focus:ring-ring/50 has-focus:ring-[3px] relative rounded-md border",
+          "has-focus:border-[hsl(var(--ring))] border-[hsl(var(--input))] shadow-xs has-focus:ring-[hsl(var(--ring))]/50 has-focus:ring-[3px] relative rounded-md border",
           defaultClassNames.dropdown_root
         ),
         dropdown: cn(
-          "bg-popover absolute inset-0 opacity-0",
+          "bg-[hsl(var(--popover))] absolute inset-0 opacity-0",
           defaultClassNames.dropdown
         ),
         caption_label: cn(

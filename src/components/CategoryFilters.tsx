@@ -16,7 +16,7 @@ export function CategoryFilters({ categories, selectedCategory, onSelectCategory
           onClick={() => onSelectCategory(category)}
           className={cn(
             "rounded-full transition-all duration-200",
-            selectedCategory === category ? "bg-primary text-primary-foreground" : "bg-transparent"
+            selectedCategory === category ? "bg-[hsl(var(--primary))] text-[hsl(var(--primary-foreground))]" : "bg-transparent"
           )}
         >
           {category}

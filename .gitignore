@@ -1,3 +1,37 @@
 
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+.wrangler/
+.output/
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Cache and logs
+.cache/
+*.log
+.eslintcache
+tsconfig.tsbuildinfo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+
 # Bootstrap marker
 .bootstrap-complete

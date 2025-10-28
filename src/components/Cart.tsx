@@ -41,7 +41,7 @@ export function Cart({ isOpen, onOpenChange }: CartProps) {
                     <img src={item.imageUrl} alt={item.name} className="w-16 h-16 rounded-md object-cover" />
                     <div className="flex-1">
                       <p className="font-semibold">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">${item.price.toFixed(2)}</p>
+                      <p className="text-sm text-[hsl(var(--muted-foreground))]">${item.price.toFixed(2)}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                           <Minus className="h-3 w-3" />
@@ -52,7 +52,7 @@ export function Cart({ isOpen, onOpenChange }: CartProps) {
                         </Button>
                       </div>
                     </div>
-                    <Button variant="ghost" size="icon" className="text-muted-foreground" onClick={() => removeItem(item.id)}>
+                    <Button variant="ghost" size="icon" className="text-[hsl(var(--muted-foreground))]" onClick={() => removeItem(item.id)}>
                       <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
@@ -76,9 +76,9 @@ export function Cart({ isOpen, onOpenChange }: CartProps) {
           </>
         ) : (
           <div className="flex-1 flex flex-col items-center justify-center text-center">
-            <ShoppingCart className="h-16 w-16 text-muted-foreground/50 mb-4" />
+            <ShoppingCart className="h-16 w-16 text-[hsl(var(--muted-foreground)_/_0.5)] mb-4" />
             <p className="text-xl font-semibold">Your cart is empty</p>
-            <p className="text-muted-foreground">Add some delicious items from the menu!</p>
+            <p className="text-[hsl(var(--muted-foreground))]">Add some delicious items from the menu!</p>
           </div>
         )}
       </SheetContent>

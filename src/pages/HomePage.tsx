@@ -84,7 +84,7 @@ export function HomePage() {
                 ))}
               </div>
             ) : error ? (
-              <div className="text-center py-16 text-destructive">
+              <div className="text-center py-16 text-[hsl(var(--destructive))]">
                 <p>Error loading menu: {error}</p>
               </div>
             ) : (

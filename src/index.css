@@ -1,9 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
 @layer base {
   :root {
-    /* Original Project Palette */
+    /* CSS Variables - these are used by both Tailwind utilities and custom CSS */
     --background: 210 40% 98%;
     --foreground: 210 4% 16%;
     --card: 210 40% 98%;
@@ -48,13 +47,14 @@
     --ring: 14 74% 52%;
   }
   * {
-    @apply border-border;
+    border-color: hsl(var(--border));
   }
   html {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
     font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
@@ -63,6 +63,15 @@
 }
 @layer components {
   .btn-gradient {
-    @apply bg-primary text-primary-foreground shadow-sm hover:bg-primary/90 active:scale-95 transition-transform;
+    background-color: hsl(var(--primary));
+    color: hsl(var(--primary-foreground));
+    box-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+    transition: background-color 0.2s, transform 0.2s;
+  }
+  .btn-gradient:hover {
+    background-color: hsl(var(--primary) / 0.9);
+  }
+  .btn-gradient:active {
+    transform: scale(0.95);
   }
 }
