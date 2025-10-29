@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from '@tanstack/react-router';
 import { useAuthStore } from '@/hooks/useAuthStore';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Button } from '@/components/ui/button';
@@ -20,7 +20,7 @@ export function LoginPage() {
     setTimeout(() => {
       if (login(password)) {
         toast.success('Login successful!');
-        navigate('/admin');
+        navigate({ to: '/admin' });
       } else {
         toast.error('Invalid password.');
         setIsLoading(false);

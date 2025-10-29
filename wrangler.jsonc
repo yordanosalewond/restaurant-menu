@@ -4,7 +4,7 @@
  */
  {
 	"$schema": "node_modules/wrangler/config-schema.json",
-	"name": "cuisine-canvas-97qi0hyowssfzdcks3aa5",
+  "name": "menuhaus",
 	"main": "worker/index.ts",
 	"compatibility_date": "2025-04-24",
 	"assets": {

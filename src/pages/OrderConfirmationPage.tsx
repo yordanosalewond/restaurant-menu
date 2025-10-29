@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { Link } from '@tanstack/react-router';
+import { Route } from '@/routes/confirmation.$orderId';
 import { AppLayout } from '@/components/layout/AppLayout';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
@@ -11,7 +12,7 @@ import { CheckCircle2 } from 'lucide-react';
 import { AnimatedPage } from '@/components/AnimatedPage';
 
 export function OrderConfirmationPage() {
-  const { orderId } = useParams<{ orderId: string }>();
+  const { orderId } = Route.useParams();
   const [order, setOrder] = useState<Order | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

@@ -1,23 +1,16 @@
-import { useRouteError, isRouteErrorResponse } from 'react-router-dom';
+import { useRouter, ErrorComponentProps } from '@tanstack/react-router';
 import { useEffect } from 'react';
 import { errorReporter } from '@/lib/errorReporter';
 import { ErrorFallback } from './ErrorFallback';
 
-export function RouteErrorBoundary() {
-  const error = useRouteError();
-
+export function RouteErrorBoundary({ error }: ErrorComponentProps) {
   useEffect(() => {
     // Report the route error
     if (error) {
       let errorMessage = 'Unknown route error';
       let errorStack = '';
 
-      if (isRouteErrorResponse(error)) {
-        errorMessage = `Route Error ${error.status}: ${error.statusText}`;
-        if (error.data) {
-          errorMessage += ` - ${JSON.stringify(error.data)}`;
-        }
-      } else if (error instanceof Error) {
+      if (error instanceof Error) {
         errorMessage = error.message;
         errorStack = error.stack || '';
       } else if (typeof error === 'string') {
@@ -31,7 +24,7 @@ export function RouteErrorBoundary() {
         stack: errorStack,
         url: window.location.href,
         timestamp: new Date().toISOString(),
-        source: 'react-router',
+        source: 'tanstack-router',
         error: error,
         level: "error",
       });
@@ -39,17 +32,6 @@ export function RouteErrorBoundary() {
   }, [error]);
 
   // Render error UI using shared ErrorFallback component
-  if (isRouteErrorResponse(error)) {
-    return (
-      <ErrorFallback
-        title={`${error.status} ${error.statusText}`}
-        message="Sorry, an error occurred while loading this page."
-        error={error.data ? { message: JSON.stringify(error.data, null, 2) } : error}
-        statusMessage="Navigation error detected"
-      />
-    );
-  }
-
   return (
     <ErrorFallback
       title="Unexpected Error"

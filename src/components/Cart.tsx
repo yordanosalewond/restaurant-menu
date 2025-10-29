@@ -12,7 +12,7 @@ import { Separator } from "@/components/ui/separator";
 import { useCartStore } from "@/hooks/useCartStore";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Minus, Plus, Trash2, ShoppingCart } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 interface CartProps {
   isOpen: boolean;
   onOpenChange: (isOpen: boolean) => void;

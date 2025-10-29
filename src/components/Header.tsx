@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/hooks/useCartStore';
 import { Cart } from '@/components/Cart';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from '@tanstack/react-router';
 import { cn } from '@/lib/utils';
 import { useAuthStore } from '@/hooks/useAuthStore';
 import { toast } from 'sonner';
@@ -23,7 +23,7 @@ export function Header() {
   const handleLogout = () => {
     logout();
     toast.info("You have been logged out.");
-    navigate('/');
+    navigate({ to: '/' });
   };
   return (
     <>

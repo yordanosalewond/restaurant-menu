@@ -5,6 +5,7 @@ import { exec } from "node:child_process";
 import pino from "pino";
 import { cloudflare } from "@cloudflare/vite-plugin";
 import tailwindcss from '@tailwindcss/vite'
+import { TanStackRouterVite } from '@tanstack/router-vite-plugin'
 
 const logger = pino();
 
@@ -90,7 +91,7 @@ function watchDependenciesPlugin() {
 export default ({ mode }: { mode: string }) => {
   const env = loadEnv(mode, process.cwd());
   return defineConfig({
-    plugins: [react(), cloudflare(), watchDependenciesPlugin(), tailwindcss()],
+    plugins: [TanStackRouterVite(), react(), cloudflare(), watchDependenciesPlugin(), tailwindcss()],
     build: {
       minify: true,
       sourcemap: "inline", // Use inline source maps for better error reporting
@@ -117,7 +118,7 @@ export default ({ mode }: { mode: string }) => {
     optimizeDeps: {
       // This is still crucial for reducing the time from when `bun run dev`
       // is executed to when the server is actually ready.
-      include: ["react", "react-dom", "react-router-dom"],
+      include: ["react", "react-dom", "@tanstack/react-router"],
       exclude: ["agents"], // Exclude agents package from pre-bundling due to Node.js dependencies
       force: true,
     },

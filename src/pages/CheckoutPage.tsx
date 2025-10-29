@@ -9,7 +9,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { customerInfoSchema, type CustomerInfo } from "@shared/types";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "@tanstack/react-router";
 import { api } from "@/lib/api-client";
 import type { Order } from "@shared/types";
 import { toast } from "sonner";
@@ -27,7 +27,7 @@ export function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   useEffect(() => {
     if (items.length === 0 && !isSubmitting) {
-      navigate('/');
+      navigate({ to: '/' });
     }
   }, [items, navigate, isSubmitting]);
   const form = useForm<CustomerInfo>({
@@ -52,7 +52,7 @@ export function CheckoutPage() {
       });
       toast.success("Order placed successfully!");
       clearCart();
-      navigate(`/confirmation/${createdOrder.id}`);
+      navigate({ to: '/confirmation/$orderId', params: { orderId: createdOrder.id } });
     } catch (error) {
       toast.error("Failed to place order. Please try again.");
       console.error(error);
