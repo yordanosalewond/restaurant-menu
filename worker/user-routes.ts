@@ -190,6 +190,14 @@ export function userRoutes(app: Hono<{ Bindings: Env }>) {
         ],
       };
 
+      console.log('[PAYMENT REQUEST]', {
+        merchant_id: c.env.ARIFPAY_MERCHANT_ID,
+        api_key: c.env.ARIFPAY_API_KEY ? '***' + c.env.ARIFPAY_API_KEY.slice(-4) : 'MISSING',
+        base_url: c.env.ARIFPAY_BASE_URL,
+        total: totalAmount,
+        items_count: items.length
+      });
+
       // Send the checkout request to ArifPay
       const response = await fetch(`${c.env.ARIFPAY_BASE_URL}/checkout/session`, {
         method: 'POST',
@@ -202,12 +210,16 @@ export function userRoutes(app: Hono<{ Bindings: Env }>) {
 
       if (!response.ok) {
         const errorText = await response.text();
-        console.error('[ARIFPAY ERROR]', errorText);
-        return bad(c, 'Payment gateway error');
+        console.error('[ARIFPAY ERROR]', { 
+          status: response.status, 
+          statusText: response.statusText,
+          body: errorText 
+        });
+        return bad(c, `Payment gateway error: ${response.status}`);
       }
 
       const result = await response.json<{ data: { sessionId: string; paymentUrl: string } }>();
-      console.log('[ARIFPAY SUCCESS]', result.data);
+      console.log('[ARIFPAY SUCCESS]', { sessionId: result.data.sessionId });
 
       return ok(c, {
         checkoutId: result.data.sessionId,
