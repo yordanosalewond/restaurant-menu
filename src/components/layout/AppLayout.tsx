@@ -9,11 +9,11 @@ export function AppLayout({ children }: AppLayoutProps): JSX.Element {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
+      <Toaster richColors position="top-center" />
       <main className="flex-1">
         {children}
       </main>
       <Footer />
-      <Toaster richColors position="top-right" />
     </div>
   );
 }

@@ -8,6 +8,16 @@ import type { Context } from "hono";
 
 export interface Env {
   GlobalDurableObject: DurableObjectNamespace<GlobalDurableObject>;
+  // ArifPay payment gateway credentials
+  ARIFPAY_MERCHANT_ID?: string;
+  ARIFPAY_API_KEY?: string;
+  ARIFPAY_BASE_URL?: string;
+  BENEFICIARY_ACCOUNT?: string;
+  BENEFICIARY_BANK?: string;
+  CANCEL_URL?: string;
+  SUCCESS_URL?: string;
+  ERROR_URL?: string;
+  NOTIFY_URL?: string;
 }
 
 type Doc<T> = { v: number; data: T };
@@ -110,12 +120,12 @@ export abstract class Entity<State> {
     this.entityName = Ctor.entityName;
 
     const instanceName = `${this.entityName}:${this._id}`;
-    const doId = env.GlobalDurableObject.idFromName(instanceName);
+    const doId = env.GlobalDurableObject.idFromName("default");
     this.stub = env.GlobalDurableObject.get(doId);
   }
 
   /** Synchronous accessors */
-  get id(): string {
+  get id(): string { 
     return this._id;
   }
   get state(): State {

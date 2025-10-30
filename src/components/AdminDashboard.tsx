@@ -16,7 +16,7 @@ export function AdminDashboard({
   const stats = [
     {
       title: "Total Revenue",
-      value: `$${totalRevenue.toFixed(2)}`,
+      value: `Br${totalRevenue.toFixed(2)}`,
       icon: DollarSign,
     },
     {
@@ -26,7 +26,7 @@ export function AdminDashboard({
     },
     {
       title: "Avg. Order Value",
-      value: `$${avgOrderValue.toFixed(2)}`,
+      value: `Br${avgOrderValue.toFixed(2)}`,
       icon: BarChart,
     },
   ];

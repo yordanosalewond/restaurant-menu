@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: hsl(210 40% 98%);
+  --color-foreground: hsl(210 4% 16%);
+  --color-card: hsl(210 40% 98%);
+  --color-card-foreground: hsl(210 4% 16%);
+  --color-border: hsl(210 40% 91%);
+}
+
 @layer base {
   :root {
     /* CSS Variables - these are used by both Tailwind utilities and custom CSS */
@@ -30,6 +38,11 @@
     --foreground: 210 40% 98%;
     --card: 210 4% 12%;
     --card-foreground: 210 40% 98%;
+    --color-background: hsl(210 4% 10%);
+    --color-foreground: hsl(210 40% 98%);
+    --color-card: hsl(210 4% 12%);
+    --color-card-foreground: hsl(210 40% 98%);
+    --color-border: hsl(210 4% 16%);
     --popover: 210 4% 10%;
     --popover-foreground: 210 40% 98%;
     --primary: 14 74% 52%;

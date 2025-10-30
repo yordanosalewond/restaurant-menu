@@ -35,7 +35,7 @@ export function Header() {
           <div className="flex h-20 items-center justify-between">
             <Link to="/" className="flex items-center gap-2">
               <Utensils className="h-7 w-7 text-[hsl(var(--primary))]" />
-              <span className="text-xl font-bold font-display tracking-wider">CuisineCanvas</span>
+              <span className="text-xl font-bold font-display tracking-wider">Menuhaus</span>
             </Link>
             <div className="flex items-center gap-2 md:gap-4">
               <nav className="flex items-center gap-1">

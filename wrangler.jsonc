@@ -15,6 +15,19 @@
 	"observability": {
 		"enabled": true
 	},
+	"vars": {
+		"ARIFPAY_ENV": "sandbox",
+		"ARIFPAY_BASE_URL": "https://gateway.arifpay.org/api",
+		"CANCEL_URL": "https://menuhaus.yordanosalewond.workers.dev/payment/cancel",
+		"SUCCESS_URL": "https://menuhaus.yordanosalewond.workers.dev/payment/success",
+		"ERROR_URL": "https://menuhaus.yordanosalewond.workers.dev/payment/error",
+		"NOTIFY_URL": "https://menuhaus.yordanosalewond.workers.dev/api/payments/notify",
+		"ARIFPAY_MERCHANT_ID": "merchant-id",
+		"ARIFPAY_API_KEY": "X3U0VnKu85D9QzHlkmaRZRh6kYX15Fjq",
+		"ARIFPAY_WEBHOOK_SECRET": "0woYi3MMDe5fu8OEydNFzzqMhksuy0bh",
+		"BENEFICIARY_ACCOUNT": "1000000000000",
+		"BENEFICIARY_BANK": "AWINETAA"
+	},
     "durable_objects": {
       "bindings": [
         {

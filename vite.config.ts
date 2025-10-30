@@ -108,6 +108,9 @@ export default ({ mode }: { mode: string }) => {
     },
     server: {
       allowedHosts: true,
+      hmr: {
+        overlay: true,
+      },
     },
     resolve: {
       alias: {
@@ -118,9 +121,8 @@ export default ({ mode }: { mode: string }) => {
     optimizeDeps: {
       // This is still crucial for reducing the time from when `bun run dev`
       // is executed to when the server is actually ready.
-      include: ["react", "react-dom", "@tanstack/react-router"],
+      include: ["react", "react-dom", "@tanstack/react-router", "zod"],
       exclude: ["agents"], // Exclude agents package from pre-bundling due to Node.js dependencies
-      force: true,
     },
     define: {
       // Define Node.js globals for the agents package

@@ -40,25 +40,53 @@ export function CheckoutPage() {
   });
   const onSubmit = useCallback(async (values: CustomerInfo) => {
     setIsSubmitting(true);
-    const orderData = {
-      items: items,
-      total: totalPrice,
-      customer: values,
-    };
+    
     try {
+      // Initiate payment with ArifPay
+      const paymentData = {
+        phone: values.phone,
+        email: values.email,
+        nonce: crypto.randomUUID(), // Unique transaction ID
+        paymentMethods: ["TELEBIRR"],
+        items: items.map(item => ({
+          name: item.name,
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        lang: "EN",
+      };
+
+      const paymentResponse = await api<{ checkoutId: string; checkoutUrl: string }>('/api/payments/checkout', {
+        method: 'POST',
+        body: JSON.stringify(paymentData),
+      });
+
+      // Create order in database
+      const orderData = {
+        items: items,
+        total: totalPrice,
+        customer: values,
+      };
+
       const createdOrder = await api<Order>('/api/orders', {
         method: 'POST',
         body: JSON.stringify(orderData),
       });
-      toast.success("Order placed successfully!");
-      clearCart();
-      navigate({ to: '/confirmation/$orderId', params: { orderId: createdOrder.id } });
+
+      // Store order ID for later reference
+      sessionStorage.setItem('pendingOrderId', createdOrder.id);
+      
+      toast.success("Redirecting to payment...");
+      
+      // Redirect to ArifPay payment page
+      window.location.href = paymentResponse.checkoutUrl;
+      
     } catch (error) {
-      toast.error("Failed to place order. Please try again.");
+      toast.error("Failed to initiate payment. Please try again.");
       console.error(error);
       setIsSubmitting(false);
     }
-  }, [items, totalPrice, clearCart, navigate]);
+  }, [items, totalPrice]);
   if (items.length === 0) {
     return null; // Render nothing while redirecting
   }
@@ -121,7 +149,7 @@ export function CheckoutPage() {
                           )}
                         />
                         <Button type="submit" className="w-full" size="lg" disabled={isSubmitting}>
-                          {isSubmitting ? 'Placing Order...' : `Place Order - $${totalPrice.toFixed(2)}`}
+                          {isSubmitting ? 'Placing Order...' : `Place Order - Br${totalPrice.toFixed(2)}`}
                         </Button>
                       </form>
                     </Form>
@@ -146,7 +174,7 @@ export function CheckoutPage() {
                                 <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
                               </div>
                             </div>
-                            <p className="font-medium">${(item.price * item.quantity).toFixed(2)}</p>
+                            <p className="font-medium">Br{(item.price * item.quantity).toFixed(2)}</p>
                           </div>
                         ))}
                       </div>
@@ -156,7 +184,7 @@ export function CheckoutPage() {
                     <Separator />
                     <div className="w-full flex justify-between text-lg font-bold">
                       <span>Total ({totalItems} items)</span>
-                      <span>${totalPrice.toFixed(2)}</span>
+                      <span>Br{totalPrice.toFixed(2)}</span>
                     </div>
                   </CardFooter>
                 </Card>

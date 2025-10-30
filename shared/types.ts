@@ -13,6 +13,7 @@ export const menuItemSchema = z.object({
   price: z.number().positive({ message: "Price must be a positive number." }),
   category: z.enum(CATEGORIES),
   imageUrl: z.string().url({ message: "Please enter a valid URL." }),
+  isActive: z.boolean().optional().default(true),
 });
 export type MenuItem = z.infer<typeof menuItemSchema> & { id: string };
 export interface CartItem extends MenuItem {

@@ -11,6 +11,7 @@ export class MenuItemEntity extends IndexedEntity<MenuItem> {
     price: 0,
     category: "Main Courses",
     imageUrl: "",
+    isActive: true,
   };
   static seedData = MOCK_MENU_ITEMS;
 }

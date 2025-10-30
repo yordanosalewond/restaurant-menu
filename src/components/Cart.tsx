@@ -41,7 +41,7 @@ export function Cart({ isOpen, onOpenChange }: CartProps) {
                     <img src={item.imageUrl} alt={item.name} className="w-16 h-16 rounded-md object-cover" />
                     <div className="flex-1">
                       <p className="font-semibold">{item.name}</p>
-                      <p className="text-sm text-[hsl(var(--muted-foreground))]">${item.price.toFixed(2)}</p>
+                      <p className="text-sm text-[hsl(var(--muted-foreground))]">Br{item.price.toFixed(2)}</p>
                       <div className="flex items-center gap-2 mt-2">
                         <Button variant="outline" size="icon" className="h-6 w-6" onClick={() => updateQuantity(item.id, item.quantity - 1)}>
                           <Minus className="h-3 w-3" />
@@ -64,7 +64,7 @@ export function Cart({ isOpen, onOpenChange }: CartProps) {
               <div className="w-full space-y-4">
                 <div className="flex justify-between font-bold text-lg">
                   <span>Total</span>
-                  <span>${totalPrice.toFixed(2)}</span>
+                  <span>Br{totalPrice.toFixed(2)}</span>
                 </div>
                 <SheetClose asChild>
                   <Button className="w-full" size="lg" asChild>

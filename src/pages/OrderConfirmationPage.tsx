@@ -83,7 +83,7 @@ export function OrderConfirmationPage() {
                         {order.items.map(item => (
                           <li key={item.id} className="flex justify-between text-sm">
                             <span>{item.name} x {item.quantity}</span>
-                            <span>${(item.price * item.quantity).toFixed(2)}</span>
+                            <span>Br{(item.price * item.quantity).toFixed(2)}</span>
                           </li>
                         ))}
                       </ul>
@@ -91,7 +91,7 @@ export function OrderConfirmationPage() {
                     <Separator />
                     <div className="flex justify-between font-bold text-lg">
                       <span>Total</span>
-                      <span>${order.total.toFixed(2)}</span>
+                      <span>Br{order.total.toFixed(2)}</span>
                     </div>
                     <div className="text-center bg-muted/50 p-4 rounded-md">
                       <p className="font-semibold">Estimated Preparation Time</p>

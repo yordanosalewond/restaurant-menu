@@ -7,7 +7,7 @@ export function Footer() {return <footer className="bg-muted/50 border-t">
           <div className="md:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <Utensils className="h-7 w-7 text-[hsl(var(--primary))]" />
-              <span className="text-xl font-bold font-display tracking-wider">CuisineCanvas</span>
+              <span className="text-xl font-bold font-display tracking-wider">Menuhaus</span>
             </Link>
             <p className="text-sm text-muted-foreground">
               The finest flavors, delivered to your door.
@@ -44,9 +44,6 @@ export function Footer() {return <footer className="bg-muted/50 border-t">
           <p className="text-sm text-muted-foreground">
             &copy; {new Date().getFullYear()} CuisineCanvas. All rights reserved.
           </p>
-          <div className="text-center text-xs text-muted-foreground/80">
-            Built with ❤️ at Cloudflare
-          </div>
         </div>
       </div>
     </footer>;}

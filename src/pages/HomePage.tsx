@@ -30,13 +30,17 @@ export function HomePage() {
     fetchMenu();
   }, []);
   const filteredMenuItems = React.useMemo(() => {
+    // Filter out inactive items and filter by category
+    const activeItems = menuItems.filter((item) => item.isActive !== false);
+    
     if (selectedCategory === 'All') {
-      return menuItems;
+      return activeItems;
     }
-    return menuItems.filter((item) => item.category === selectedCategory);
+    return activeItems.filter((item) => item.category === selectedCategory);
   }, [menuItems, selectedCategory]);
   const uniqueCategories = React.useMemo(() => {
-    return CATEGORIES.filter(cat => menuItems.some(item => item.category === cat));
+    // Only show categories that have active items
+    return CATEGORIES.filter(cat => menuItems.some(item => item.category === cat && item.isActive !== false));
   }, [menuItems]);
   return (
     <AppLayout>
