@@ -42,7 +42,7 @@ export function Footer() {return <footer className="bg-muted/50 border-t">
         <Separator className="my-8" />
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} CuisineCanvas. All rights reserved.
+            &copy; {new Date().getFullYear()} Menuhaus. All rights reserved.
           </p>
         </div>
       </div>
