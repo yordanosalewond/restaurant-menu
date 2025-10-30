@@ -9,7 +9,9 @@ export function userRoutes(app: Hono<{ Bindings: Env }>) {
   app.get('/api/menu', async (c) => {
     await MenuItemEntity.ensureSeed(c.env);
     const page = await MenuItemEntity.list(c.env, null, 100); // Fetch up to 100 items
-    return ok(c, page.items);
+    // Filter out invalid items (items with no name or price 0)
+    const validItems = page.items.filter(item => item.name && item.name.trim() !== '');
+    return ok(c, validItems);
   });
   // POST a new menu item
   app.post('/api/menu', async (c) => {
@@ -49,6 +51,34 @@ export function userRoutes(app: Hono<{ Bindings: Env }>) {
       return notFound(c, 'Menu item not found.');
     }
     return ok(c, { id });
+  });
+
+  // Clean up invalid menu items (admin only)
+  app.post('/api/menu/cleanup', async (c) => {
+    try {
+      // First, clean up orphaned index entries
+      const orphanedCount = await MenuItemEntity.cleanupIndex(c.env);
+      
+      // Then, get the list of valid items and remove any with invalid data
+      const page = await MenuItemEntity.list(c.env, null, 1000);
+      const invalidItems = page.items.filter(item => !item.name || item.name.trim() === '' || item.price === 0);
+      const idsToDelete = invalidItems.map(item => item.id);
+      
+      let deletedCount = 0;
+      if (idsToDelete.length > 0) {
+        deletedCount = await MenuItemEntity.deleteMany(c.env, idsToDelete);
+      }
+      
+      return ok(c, { 
+        orphanedIndexEntries: orphanedCount, 
+        invalidDocuments: deletedCount,
+        total: orphanedCount + deletedCount,
+        message: `Cleaned up ${orphanedCount} orphaned index entries and ${deletedCount} invalid documents`
+      });
+    } catch (error) {
+      console.error('[CLEANUP ERROR]', error);
+      return c.json({ success: false, error: 'Cleanup failed' }, 500);
+    }
   });
   // GET all orders
   app.get('/api/orders', async (c) => {

@@ -273,7 +273,23 @@ export abstract class IndexedEntity<S extends { id: string }> extends Entity<S> 
   ): Promise<{ items: IS<TCtor>[]; next: string | null }> {
     const idx = new Index<string>(env, this.indexName);
     const { items: ids, next } = await idx.page(cursor, limit);
-    const rows = (await Promise.all(ids.map((id) => new this(env, id).getState()))) as IS<TCtor>[];
+    
+    // Check which documents actually exist and only return those
+    const results = await Promise.all(
+      ids.map(async (id) => {
+        const inst = new this(env, id);
+        const exists = await inst.exists();
+        if (exists) {
+          const state = await inst.getState();
+          return state as IS<TCtor>;
+        }
+        return null;
+      })
+    );
+    
+    // Filter out null values (non-existent documents)
+    const rows = results.filter((row): row is IS<TCtor> => row !== null);
+    
     return { items: rows, next };
   }
 
@@ -309,6 +325,31 @@ export abstract class IndexedEntity<S extends { id: string }> extends Entity<S> 
   static async removeFromIndex<TCtor extends CtorAny>(this: HS<TCtor>, env: Env, id: string): Promise<void> {
     const idx = new Index<string>(env, this.indexName);
     await idx.remove(id);
+  }
+
+  /** Clean up orphaned index entries (IDs without corresponding documents). Returns number of orphaned IDs removed. */
+  static async cleanupIndex<TCtor extends CtorAny>(this: HS<TCtor>, env: Env): Promise<number> {
+    const idx = new Index<string>(env, this.indexName);
+    const ids = await idx.list();
+    
+    // Check which IDs don't have corresponding documents
+    const orphanedIds: string[] = [];
+    await Promise.all(
+      ids.map(async (id) => {
+        const inst = new this(env, id);
+        const exists = await inst.exists();
+        if (!exists) {
+          orphanedIds.push(id);
+        }
+      })
+    );
+    
+    // Remove orphaned IDs from index
+    if (orphanedIds.length > 0) {
+      await idx.removeBatch(orphanedIds);
+    }
+    
+    return orphanedIds.length;
   }
 
   protected override async ensureState(): Promise<S> {

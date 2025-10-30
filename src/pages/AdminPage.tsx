@@ -142,6 +142,23 @@ export function AdminPage() {
     setSelectedItem(item);
     setIsConfirmOpen(true);
   };
+
+  const handleCleanup = async () => {
+    try {
+      const result = await api<{ deleted: number; ids: string[] }>('/api/menu/cleanup', {
+        method: 'POST',
+      });
+      if (result.deleted > 0) {
+        toast.success(`Cleaned up ${result.deleted} invalid menu items`);
+        fetchData(); // Refresh the data
+      } else {
+        toast.info('No invalid items found');
+      }
+    } catch (error) {
+      toast.error('Failed to cleanup menu items');
+    }
+  };
+
   return (
     <AppLayout>
       <div className="flex">
@@ -182,6 +199,10 @@ export function AdminPage() {
                         ))}
                       </SelectContent>
                     </Select>
+                    <Button variant="outline" onClick={handleCleanup} className="w-full sm:w-auto">
+                      <Trash2 className="mr-2 h-4 w-4" />
+                      Clean Invalid
+                    </Button>
                     <Dialog open={isFormOpen} onOpenChange={(open) => {
                       if (!open) setSelectedItem(null);
                       setIsFormOpen(open);

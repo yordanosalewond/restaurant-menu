@@ -15,9 +15,12 @@ import type { Order } from "@shared/types";
 import { toast } from "sonner";
 import { useEffect, useState, useMemo, useCallback } from "react";
 import { AnimatedPage } from "@/components/AnimatedPage";
+import { Trash2, Plus, Minus } from "lucide-react";
 export function CheckoutPage() {
   const items = useCartStore(state => state.items);
   const clearCart = useCartStore(state => state.clearCart);
+  const removeItem = useCartStore(state => state.removeItem);
+  const updateQuantity = useCartStore(state => state.updateQuantity);
   const { totalPrice, totalItems } = useMemo(() => {
     const totalItems = items.reduce((total, item) => total + item.quantity, 0);
     const totalPrice = items.reduce((total, item) => total + item.price * item.quantity, 0);
@@ -166,15 +169,52 @@ export function CheckoutPage() {
                     <ScrollArea className="h-64 pr-4 -mr-4">
                       <div className="space-y-4">
                         {items.map(item => (
-                          <div key={item.id} className="flex justify-between items-center">
-                            <div className="flex items-center gap-4">
-                              <img src={item.imageUrl} alt={item.name} className="w-12 h-12 rounded-md object-cover" />
-                              <div>
-                                <p className="font-medium">{item.name}</p>
-                                <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                          <div key={item.id} className="space-y-2 pb-4 border-b last:border-0">
+                            <div className="flex justify-between items-start gap-4">
+                              <div className="flex items-start gap-3 flex-1">
+                                <img src={item.imageUrl} alt={item.name} className="w-12 h-12 rounded-md object-cover" />
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-medium truncate">{item.name}</p>
+                                  <p className="text-sm text-muted-foreground">Br{item.price.toFixed(2)} each</p>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <p className="font-semibold">Br{(item.price * item.quantity).toFixed(2)}</p>
                               </div>
                             </div>
-                            <p className="font-medium">Br{(item.price * item.quantity).toFixed(2)}</p>
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2">
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="h-7 w-7"
+                                  onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                                >
+                                  <Minus className="h-3 w-3" />
+                                </Button>
+                                <span className="w-8 text-center font-medium">{item.quantity}</span>
+                                <Button
+                                  variant="outline"
+                                  size="icon"
+                                  className="h-7 w-7"
+                                  onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                                >
+                                  <Plus className="h-3 w-3" />
+                                </Button>
+                              </div>
+                              <Button
+                                variant="ghost"
+                                size="sm"
+                                className="text-destructive hover:text-destructive"
+                                onClick={() => {
+                                  removeItem(item.id);
+                                  toast.success(`${item.name} removed from cart`);
+                                }}
+                              >
+                                <Trash2 className="h-4 w-4 mr-1" />
+                                Remove
+                              </Button>
+                            </div>
                           </div>
                         ))}
                       </div>
